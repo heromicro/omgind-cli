@@ -2,6 +2,11 @@
 
 > omgind 辅助工具，提供创建项目、快速生成功能模块的功能
 
+## build
+```
+go build -o omgind-cli main.go
+```
+
 ## 下载并使用
 
 ```bash
