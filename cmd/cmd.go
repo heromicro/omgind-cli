@@ -16,6 +16,7 @@ func NewCommand() cli.Command {
 	return cli.Command{
 		Name:    "new",
 		Aliases: []string{"n"},
+		Usage:   "create new project",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:  "dir, d",
@@ -71,6 +72,7 @@ func GenerateCommand() cli.Command {
 	return cli.Command{
 		Name:    "generate",
 		Aliases: []string{"g"},
+		Usage:   "generate code for project",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:  "dir, d",
