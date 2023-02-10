@@ -45,7 +45,7 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	api_{{.Apiv}} "kuiper/internal/api/{{.Apiv}}"
+	api_{{.Apiv}} "{{.PkgName}}/internal/api/{{.Apiv}}"
 )
 
 func (r *Router) init{{.Name}}Router{{.Apiv | ToUpper}}(urg *gin.RouterGroup, api *api_{{.Apiv}}.{{.Name}}, pathcomp string) {
