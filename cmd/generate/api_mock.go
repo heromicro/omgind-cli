@@ -64,7 +64,7 @@ type {{.Name}} struct {
 // @Param current query int true "分页索引" default(1)
 // @Param pageSize query int true "分页大小" default(10)
 // @Param queryValue query string false "查询值"
-// @Success 200 {array} schema.ListResult "查询结果：{list:列表数据,pagination:{current:页索引,pageSize:页大小,total:总数量}}"
+// @Success 200 {array} schema.ListResult{list=schema.{{.PluralName | Title}},pagination=schema.PaginationResult}
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
 // @Router /api/{{.Apiv}}/{{.PluralName}} [get]
