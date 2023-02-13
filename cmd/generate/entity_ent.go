@@ -162,7 +162,7 @@ func genEntEntity(ctx context.Context, pkgName, dir, name, comment, mixin_parts 
 
 		idx := strings.ToLower(strings.TrimSpace(field.Index))
 
-		if idx != "" {
+		if idx != "" && idx != "false" && idx != "no" {
 			index_buf := new(bytes.Buffer)
 
 			index_buf.WriteString(fmt.Sprintf("index.Fields(\"%s\")", field.Storage))
