@@ -8,5 +8,6 @@ require (
 	github.com/jinzhu/inflection v1.0.0
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/urfave/cli v1.22.5
+	golang.org/x/text v0.7.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0
 )

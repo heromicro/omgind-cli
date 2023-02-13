@@ -12,6 +12,8 @@ import (
 	"text/template"
 
 	"github.com/emirpasic/gods/lists/arraylist"
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 )
 
 const (
@@ -86,7 +88,9 @@ func execParseTpl(tpl string, data interface{}) (*bytes.Buffer, error) {
 	funcMap := template.FuncMap{
 		"ToLower": strings.ToLower,
 		"ToUpper": strings.ToUpper,
-		"Join":    strings.Join,
+		// "Title":   strings.Title,
+		"Title": cases.Title(language.English).String,
+		"Join":  strings.Join,
 		"Truncate": func(s string) string {
 			return fmt.Sprintf("%s ...", s[:5])
 		},
