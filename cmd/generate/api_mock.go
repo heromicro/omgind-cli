@@ -21,7 +21,7 @@ func genAPIMock(ctx context.Context, pkgName, dir, name, comment, apiv string) e
 		"PkgName":    pkgName,
 		"Name":       name,
 		"Comment":    comment,
-		"PluralName": helper.ToPlural(pname),
+		"PluralName": strings.Replace(helper.ToPlural(pname), "-", "_", -1),
 		"Apiv":       apiv,
 	}
 
