@@ -95,6 +95,7 @@ type {{.Name}} struct {
 // {{.Name}}QueryParam 查询条件
 type {{.Name}}QueryParam struct {
 	PaginationParam
+	QueryValue string ` + "`" + `form:"queryValue"` + "`" + ` // 模糊查询
 }
 
 // {{.Name}}QueryOptions 查询可选参数项

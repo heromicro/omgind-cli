@@ -152,6 +152,10 @@ func genEntEntity(ctx context.Context, pkgName, dir, name, comment, mixin_parts 
 
 		}
 
+		if !field.Required {
+			field_buf.WriteString(fmt.Sprintf(".Nillable().Optional()"))
+		}
+
 		if field.Storage != "" {
 			field_buf.WriteString(fmt.Sprintf(".StorageKey(\"%s\")", field.Storage))
 		}
