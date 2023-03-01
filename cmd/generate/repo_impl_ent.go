@@ -197,7 +197,7 @@ func (a *{{.Name}}) Delete(ctx context.Context, id string) error {
 		return err
 	}
 
-	_, err1 := r_{{.Name | ToLower}}.Update().SetDeletedAt(time.Now()).Save(ctx)
+	_, err1 := r_{{.Name | ToLower}}.Update().SetDeletedAt(time.Now()).SetIsDel(true).Save(ctx)
 
 	return errors.WithStack(err1)
 }
