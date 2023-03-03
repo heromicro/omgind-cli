@@ -234,18 +234,5 @@ const TplProjectStructure = `
 │       ├── store
 │       │   └── redis.go
 │       └── vcode.go
-├── resource
-│   └── fonts
-│       ├── 3Dumb.ttf
-│       ├── ApothecaryFont.ttf
-│       ├── Comismsh.ttf
-│       ├── DENNEthree-dee.ttf
-│       ├── DeborahFancyDress.ttf
-│       ├── Flim-Flam.ttf
-│       ├── RitaSmith.ttf
-│       ├── actionj.ttf
-│       ├── chromohv.ttf
-│       ├── readme.md
-│       └── wqy-microhei.ttc
 └── scripts
 `
