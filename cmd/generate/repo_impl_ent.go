@@ -150,7 +150,7 @@ func (a *{{.Name}}) Get(ctx context.Context, id string, opts ...schema.{{.Name}}
 	
 	r_{{.Name | ToLower}}, err := a.EntCli.{{.Name}}.Query().Where({{.EntPackage}}.IDEQ(id)).Only(ctx)
 	if err != nil {
-		if _, ok := err.(*ent.NotFoundError); ok {
+		if ent.IsNotFound(err) {
 			return nil, errors.ErrNotFound
 		}
 		return nil, err
