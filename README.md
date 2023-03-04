@@ -4,7 +4,10 @@
 
 ## build
 ```
+
 go build -o omgind-cli main.go
+cp omgind-cli $GOPATH/bin/
+
 ```
 
 ## 下载并使用
