@@ -66,16 +66,16 @@ type {{.Name}} struct {
 
 
 // ToSchema{{.Name}} 转换为
-func (a *{{.Name}}) toSchema{{.Name}}(et *ent.{{.Name}}) *schema.{{.Name}} {
+func (a *{{.Name}}) ToSchema{{.Name}}(et *ent.{{.Name}}) *schema.{{.Name}} {
 	item := new(schema.{{.Name}})
 	structure.Copy(et, item)
 	return item
 }
 
-func (a *{{.Name}}) toSchema{{.PluralName}}(ets ent.{{.PluralName}}) []*schema.{{.Name}} {
+func (a *{{.Name}}) ToSchema{{.PluralName}}(ets ent.{{.PluralName}}) []*schema.{{.Name}} {
 	list := make([]*schema.{{.Name}}, len(ets))
 	for i, item := range ets {
-		list[i] = a.toSchema{{.Name}}(item)
+		list[i] = a.ToSchema{{.Name}}(item)
 	}
 	return list
 }
@@ -139,7 +139,7 @@ func (a *{{.Name}}) Query(ctx context.Context, params schema.{{.Name}}QueryParam
 
 	qr := &schema.{{.Name}}QueryResult{
 		PageResult: pr,
-		Data:       a.toSchema{{.PluralName}}(list),
+		Data:       a.ToSchema{{.PluralName}}(list),
 	}
 
 	return qr, nil
@@ -156,7 +156,7 @@ func (a *{{.Name}}) Get(ctx context.Context, id string, opts ...schema.{{.Name}}
 		return nil, err
 	}
 
-	return a.toSchema{{.Name}}(r_{{.Name | ToLower}}), nil
+	return a.ToSchema{{.Name}}(r_{{.Name | ToLower}}), nil
 }
 
 // View 查询指定数据
@@ -170,7 +170,7 @@ func (a *{{.Name}}) View(ctx context.Context, id string, opts ...schema.{{.Name}
 		return nil, err
 	}
 
-	return a.toSchema{{.Name}}(r_{{.Name | ToLower}}), nil
+	return a.ToSchema{{.Name}}(r_{{.Name | ToLower}}), nil
 }
 
 // Create 创建数据
@@ -182,7 +182,7 @@ func (a *{{.Name}}) Create(ctx context.Context, item schema.{{.Name}}) (*schema.
 	if err != nil {
 		return nil, err
 	}
-	sch_{{.Name | ToLower}} := a.toSchema{{.Name}}(r_{{.Name | ToLower}})
+	sch_{{.Name | ToLower}} := a.ToSchema{{.Name}}(r_{{.Name | ToLower}})
 	return sch_{{.Name | ToLower}}, nil
 }
 
@@ -197,7 +197,7 @@ func (a *{{.Name}}) Update(ctx context.Context, id string, item schema.{{.Name}}
 	iteminput := a.ToEntUpdate{{.Name}}Input(&item)
 
 	r_{{.Name | ToLower}}, err := oitem.Update().SetInput(*iteminput).Save(ctx)
-	sch_{{.Name | ToLower}} := a.toSchema{{.Name}}(r_{{.Name | ToLower}})
+	sch_{{.Name | ToLower}} := a.ToSchema{{.Name}}(r_{{.Name | ToLower}})
 
 	return sch_{{.Name | ToLower}}, nil
 }
