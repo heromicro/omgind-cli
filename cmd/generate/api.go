@@ -89,6 +89,17 @@ func (a *{{.Name}}) Get(c *gin.Context) {
 	ginx.ResSuccess(c, item)
 }
 
+// View 查询指定数据
+func (a *{{.Name}}) View(c *gin.Context) {
+	ctx := c.Request.Context()
+	item, err := a.{{.Name}}Srv.View(ctx, c.Param("id"))
+	if err != nil {
+		ginx.ResError(c, err)
+		return
+	}
+	ginx.ResSuccess(c, item)
+}
+
 // Create 创建数据
 func (a *{{.Name}}) Create(c *gin.Context) {
 	ctx := c.Request.Context()
