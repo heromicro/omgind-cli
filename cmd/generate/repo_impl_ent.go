@@ -159,6 +159,20 @@ func (a *{{.Name}}) Get(ctx context.Context, id string, opts ...schema.{{.Name}}
 	return a.toSchema{{.Name}}(r_{{.Name | ToLower}}), nil
 }
 
+// View 查询指定数据
+func (a *{{.Name}}) View(ctx context.Context, id string, opts ...schema.{{.Name}}QueryOptions) (*schema.{{.Name}}, error) {
+	
+	r_{{.Name | ToLower}}, err := a.EntCli.{{.Name}}.Query().Where({{.EntPackage}}.IDEQ(id)).Only(ctx)
+	if err != nil {
+		if ent.IsNotFound(err) {
+			return nil, errors.ErrNotFound
+		}
+		return nil, err
+	}
+
+	return a.toSchema{{.Name}}(r_{{.Name | ToLower}}), nil
+}
+
 // Create 创建数据
 func (a *{{.Name}}) Create(ctx context.Context, item schema.{{.Name}}) (*schema.{{.Name}}, error) {
 	

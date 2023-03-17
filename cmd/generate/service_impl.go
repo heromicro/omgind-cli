@@ -74,6 +74,18 @@ func (a *{{.Name}}) Get(ctx context.Context, id string, opts ...schema.{{.Name}}
 	return item, nil
 }
 
+// View 查询指定数据
+func (a *{{.Name}}) View(ctx context.Context, id string, opts ...schema.{{.Name}}QueryOptions) (*schema.{{.Name}}, error) {
+	item, err := a.{{.Name}}Repo.View(ctx, id, opts...)
+	if err != nil {
+		return nil, err
+	} else if item == nil {
+		return nil, errors.ErrNotFound
+	}
+
+	return item, nil
+}
+
 // Create 创建数据
 func (a *{{.Name}}) Create(ctx context.Context, item schema.{{.Name}}) (*schema.{{.Name}}, error) {
 	// TODO: check?

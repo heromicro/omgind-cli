@@ -74,7 +74,7 @@ func (a *{{.Name}}) Query(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-
+	
 	ginx.ResPage(c, result.Data, result.PageResult)
 }
 
@@ -104,7 +104,7 @@ func (a *{{.Name}}) Create(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResSuccess(c, result.ID)
+	ginx.ResSuccess(c, result)
 }
 
 // Update 更新数据
@@ -116,12 +116,12 @@ func (a *{{.Name}}) Update(c *gin.Context) {
 		return
 	}
 
-	_, err := a.{{.Name}}Srv.Update(ctx, c.Param("id"), item)
+	result, err := a.{{.Name}}Srv.Update(ctx, c.Param("id"), item)
 	if err != nil {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResOK(c)
+	ginx.ResSuccess(c, result)
 }
 
 // Delete 删除数据
@@ -132,7 +132,7 @@ func (a *{{.Name}}) Delete(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResOK(c)
+	ginx.ResOK(c, "成功删除数据")
 }
 
 
@@ -144,7 +144,7 @@ func (a *{{.Name}}) Enable(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResOK(c)
+	ginx.ResOK(c, "启用成功")
 }
 
 // Disable 禁用数据
@@ -155,7 +155,7 @@ func (a *{{.Name}}) Disable(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResOK(c)
+	ginx.ResOK(c, "启用成功")
 }
 
 `

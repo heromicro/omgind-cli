@@ -85,6 +85,20 @@ func (a *{{.Name}}) Query(c *gin.Context) {
 func (a *{{.Name}}) Get(c *gin.Context) {
 }
 
+// View 查询指定数据
+// @Tags {{.Comment}}
+// @Summary 查询指定数据
+// @Security ApiKeyAuth
+// @Param Authorization header string false "Bearer 用户令牌"
+// @Param id path string true "唯一标识"
+// @Success 200 {object} schema.{{.Name}}
+// @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
+// @Failure 404 {object} schema.ErrorResult "{error:{code:0,message:资源不存在}}"
+// @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
+// @Router /api/{{.Apiv}}/{{.PluralName}}/{id}/view [get]
+func (a *{{.Name}}) View(c *gin.Context) {
+}
+
 // Create 创建数据
 // @Tags {{.Comment}}
 // @Summary 创建数据
