@@ -58,7 +58,7 @@ func (r *Router) init{{.Name}}Router{{.Apiv | ToUpper}}(urg *gin.RouterGroup, ap
 		g{{.Name}}.DELETE(":id", api.Delete)
 		g{{.Name}}.PATCH(":id/enable", api.Enable)
 		g{{.Name}}.PATCH(":id/disable", api.Disable)
-		g{{.Name}}.PATCH(":id/view", api.View)
+		g{{.Name}}.GET(":id/view", api.View)
 	}
 }
 
