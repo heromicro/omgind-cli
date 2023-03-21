@@ -101,7 +101,9 @@ type {{.Name}}QueryParam struct {
 // {{.Name}}QueryOptions 查询可选参数项
 type {{.Name}}QueryOptions struct {
 	OrderFields []*OrderField // 排序字段
-	OnlyFields  []string      // only query fields
+
+	FieldsIncludes []string      // includes fields
+	FieldsExcludes []string      // exlcudes fields
 }
 
 // {{.Name}}QueryResult 查询结果
