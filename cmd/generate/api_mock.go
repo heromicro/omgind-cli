@@ -61,6 +61,7 @@ type {{.Name}} struct {
 // @Summary 查询数据
 // @Security ApiKeyAuth
 // @Param Authorization header string false "Bearer 用户令牌"
+// @Param "" query schema.{{.Name}}QueryParam false "查询参数" default{}
 // @Param current query int true "分页索引" default(1)
 // @Param pageSize query int true "分页大小" default(10)
 // @Param queryValue query string false "查询值"
