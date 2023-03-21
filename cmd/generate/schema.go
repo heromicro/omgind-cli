@@ -102,6 +102,7 @@ type {{.Name}}QueryParam struct {
 type {{.Name}}QueryOptions struct {
 	OrderFields []*OrderField // 排序字段
 
+	FieldsAll      bool  		 // all fields
 	FieldsIncludes []string      // includes fields
 	FieldsExcludes []string      // exlcudes fields
 }
