@@ -142,6 +142,7 @@ func (a *Command) Exec() error {
 			fmt.Sprintf("%s/scripts/sql/init_mysql.sql", a.cfg.Dir),
 			fmt.Sprintf("%s/scripts/sql/init_postgres.sql", a.cfg.Dir),
 			fmt.Sprintf("%s/cmd/%s/main.go", a.cfg.Dir, defaultAppName),
+			fmt.Sprintf("%s/cmd/%s/generator/entgo/main.go", a.cfg.Dir, defaultAppName),
 		)
 		if err != nil {
 			return err
@@ -198,6 +199,8 @@ func (a *Command) gitClone(dir, source string) error {
 	}
 	args = append(args, "-b", branch)
 
+	args = append(args, "--depth")
+	args = append(args, "1")
 	args = append(args, source)
 	args = append(args, dir)
 
