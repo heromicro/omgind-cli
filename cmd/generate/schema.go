@@ -88,7 +88,7 @@ package schema
 import (
 	"time"
 
-	"github.com/heromicro/omgind/pkg/helper/json"
+	"{{.PkgName}}/pkg/helper/json"
 )
 
 // {{.Name}} {{.Comment}}对象
