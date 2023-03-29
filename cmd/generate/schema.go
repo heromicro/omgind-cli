@@ -92,6 +92,11 @@ type {{.Name}} struct {
 	{{.Fields}}
 }
 
+
+func (a *{{.Name}}) String() string {
+	return json.MarshalToString(a)
+}
+
 // {{.Name}}QueryParam 查询条件
 type {{.Name}}QueryParam struct {
 	PaginationParam
