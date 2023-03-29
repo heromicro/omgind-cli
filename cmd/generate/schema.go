@@ -85,7 +85,11 @@ func genSchema(ctx context.Context, pkgName, dir, name, comment string, fields .
 const schemaTpl = `
 package schema
 
-import "time"
+import (
+	"time"
+
+	"github.com/heromicro/omgind/pkg/helper/json"
+)
 
 // {{.Name}} {{.Comment}}对象
 type {{.Name}} struct {
