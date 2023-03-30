@@ -80,14 +80,14 @@ func ToSchema{{.PluralName}}(ets ent.{{.PluralName}}) []*schema.{{.Name}} {
 	return list
 }
 
-func (a *{{.Name}}) ToEntCreate{{.Name}}Input(sch *schema.{{.Name}}) *ent.Create{{.Name}}Input {
+func ToEntCreate{{.Name}}Input(sch *schema.{{.Name}}) *ent.Create{{.Name}}Input {
 	createinput := new(ent.Create{{.Name}}Input)
 	structure.Copy(sch, &createinput)
 
 	return createinput
 }
 
-func (a *{{.Name}}) ToEntUpdate{{.Name}}Input(sch *schema.{{.Name}}) *ent.Update{{.Name}}Input {
+func ToEntUpdate{{.Name}}Input(sch *schema.{{.Name}}) *ent.Update{{.Name}}Input {
 	updateinput := new(ent.Update{{.Name}}Input)
 	structure.Copy(sch, &updateinput)
 
@@ -176,7 +176,7 @@ func (a *{{.Name}}) View(ctx context.Context, id string, opts ...schema.{{.Name}
 // Create 创建数据
 func (a *{{.Name}}) Create(ctx context.Context, item schema.{{.Name}}) (*schema.{{.Name}}, error) {
 	
-	iteminput := a.ToEntCreate{{.Name}}Input(&item)
+	iteminput := ToEntCreate{{.Name}}Input(&item)
 	r_{{.Name | ToLower}}, err := a.EntCli.{{.Name}}.Create().SetInput(*iteminput).Save(ctx)
 
 	if err != nil {
@@ -194,7 +194,7 @@ func (a *{{.Name}}) Update(ctx context.Context, id string, item schema.{{.Name}}
 		return nil, err
 	}
 
-	iteminput := a.ToEntUpdate{{.Name}}Input(&item)
+	iteminput := ToEntUpdate{{.Name}}Input(&item)
 
 	r_{{.Name | ToLower}}, err := oitem.Update().SetInput(*iteminput).Save(ctx)
 	sch_{{.Name | ToLower}} := ToSchema{{.Name}}(r_{{.Name | ToLower}})
