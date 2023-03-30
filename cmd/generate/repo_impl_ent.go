@@ -197,6 +197,9 @@ func (a *{{.Name}}) Update(ctx context.Context, id string, item schema.{{.Name}}
 	iteminput := ToEntUpdate{{.Name}}Input(&item)
 
 	r_{{.Name | ToLower}}, err := oitem.Update().SetInput(*iteminput).Save(ctx)
+	if err != nil {
+		return nil, err
+	}
 	sch_{{.Name | ToLower}} := ToSchema{{.Name}}(r_{{.Name | ToLower}})
 
 	return sch_{{.Name | ToLower}}, nil
