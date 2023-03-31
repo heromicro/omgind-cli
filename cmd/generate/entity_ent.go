@@ -87,6 +87,8 @@ func genEntEntity(ctx context.Context, pkgName, dir, name, comment, mixin_parts 
 			field_buf.WriteString(fmt.Sprintf("field.Float32(\"%s\")", field.Storage))
 		case "bool":
 			field_buf.WriteString(fmt.Sprintf("field.Bool(\"%s\")", field.Storage))
+		case "time":
+			field_buf.WriteString(fmt.Sprintf("field.Time(\"%s\")", field.Storage))
 		}
 
 		switch field.Type {
@@ -149,7 +151,8 @@ func genEntEntity(ctx context.Context, pkgName, dir, name, comment, mixin_parts 
 			if field.Default != "" {
 				field_buf.WriteString(fmt.Sprintf(".Default(%s)", field.Default))
 			}
-
+		case "time":
+			
 		}
 
 		if !field.Required {
