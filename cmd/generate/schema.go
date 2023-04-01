@@ -33,7 +33,14 @@ func genSchema(ctx context.Context, pkgName, dir, name, comment string, fields .
 
 	buf := new(bytes.Buffer)
 	for _, field := range tfields {
-		buf.WriteString(fmt.Sprintf("%s \t %s \t", field.Name, field.Type))
+		switch field.Type {
+		case "time":
+			buf.WriteString(fmt.Sprintf("%s \t %s.Time \t", field.Name, field.Type))
+
+		default:
+			buf.WriteString(fmt.Sprintf("%s \t %s \t", field.Name, field.Type))
+		}
+
 		buf.WriteByte('`')
 		buf.WriteString(fmt.Sprintf(`json:"%s"`, helper.ToLowerUnderlinedNamer(field.Name)))
 
