@@ -105,7 +105,7 @@ func (a *{{.Name}}) getQueryOption(opts ...schema.{{.Name}}QueryOptions) schema.
 
 // Query 查询数据
 func (a *{{.Name}}) Query(ctx context.Context, params schema.{{.Name}}QueryParam, opts ...schema.{{.Name}}QueryOptions) (*schema.{{.Name}}QueryResult, error) {
-	opt := a.getQueryOption(opts...)
+	// opt := a.getQueryOption(opts...)
 
 	query := a.EntCli.{{.Name}}.Query()
 
@@ -123,8 +123,7 @@ func (a *{{.Name}}) Query(ctx context.Context, params schema.{{.Name}}QueryParam
 		return &schema.{{.Name}}QueryResult{PageResult: pr}, nil
 	}
 
-	opt.OrderFields = append(opt.OrderFields, schema.NewOrderField("id", schema.OrderByDESC))
-	query = query.Order(ParseOrder(opt.OrderFields)...)
+	query = query.Order({{.GenPkg}}.Asc({{.EntPackage}}.FieldSort))
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()
