@@ -19,6 +19,7 @@ type Config struct {
 	Storage    string
 	Modules    string
 	ApiVersion string
+	GenPkg     string
 }
 
 // Exec 执行生成模块命令
@@ -121,7 +122,7 @@ func (a *Command) Exec() error {
 				toEntityEntFields()...)
 			a.handleError(err, "Generate ent entity")
 
-			err = genRepoImplEnt(ctx, pkgName, dir, item.StructName, item.Comment)
+			err = genRepoImplEnt(ctx, pkgName, dir, a.cfg.GenPkg, item.StructName, item.Comment)
 			a.handleError(err, "Generate ent entity")
 			err = insertRepoInjectEnt(ctx, dir, item.StructName)
 			a.handleError(err, "Insert ent model inject")

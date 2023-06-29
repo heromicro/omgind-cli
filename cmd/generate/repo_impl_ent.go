@@ -14,13 +14,14 @@ func getRepoImplEntFileName(dir, name string) string {
 }
 
 // 生成model实现文件
-func genRepoImplEnt(ctx context.Context, pkgName, dir, name, comment string) error {
+func genRepoImplEnt(ctx context.Context, pkgName, dir, genPkg, name, comment string) error {
 	data := map[string]interface{}{
 		"PkgName":    pkgName,
 		"Name":       name,
 		"PluralName": helper.ToPlural(name),
 		"Comment":    comment,
 		"EntPackage": strings.ToLower(name),
+		"GenPkg":     genPkg,
 	}
 
 	buf, err := execParseTpl(modelImplEntTpl, data)
@@ -47,8 +48,8 @@ import (
 	"time"
 
 	"{{.PkgName}}/internal/app/schema"
-	"{{.PkgName}}/internal/gen/ent"
-	"{{.PkgName}}/internal/gen/ent/{{.EntPackage}}"
+	"{{.PkgName}}/internal/gen/{{.GenPkg}}"
+	"{{.PkgName}}/internal/gen/{{.GenPkg}}/{{.EntPackage}}"
 	"{{.PkgName}}/pkg/errors"
 	"{{.PkgName}}/pkg/helper/structure"
 
@@ -61,18 +62,18 @@ var {{.Name}}Set = wire.NewSet(wire.Struct(new({{.Name}}), "*"))
 
 // {{.Name}} {{.Comment}}存储
 type {{.Name}} struct {
-	EntCli *ent.Client
+	EntCli *{{.GenPkg}}.Client
 }
 
 
 // ToSchema{{.Name}} 转换为
-func ToSchema{{.Name}}(et *ent.{{.Name}}) *schema.{{.Name}} {
+func ToSchema{{.Name}}(et *{{.GenPkg}}.{{.Name}}) *schema.{{.Name}} {
 	item := new(schema.{{.Name}})
 	structure.Copy(et, item)
 	return item
 }
 
-func ToSchema{{.PluralName}}(ets ent.{{.PluralName}}) []*schema.{{.Name}} {
+func ToSchema{{.PluralName}}(ets {{.GenPkg}}.{{.PluralName}}) []*schema.{{.Name}} {
 	list := make([]*schema.{{.Name}}, len(ets))
 	for i, item := range ets {
 		list[i] = ToSchema{{.Name}}(item)
@@ -80,15 +81,15 @@ func ToSchema{{.PluralName}}(ets ent.{{.PluralName}}) []*schema.{{.Name}} {
 	return list
 }
 
-func ToEntCreate{{.Name}}Input(sch *schema.{{.Name}}) *ent.Create{{.Name}}Input {
-	createinput := new(ent.Create{{.Name}}Input)
+func ToEntCreate{{.Name}}Input(sch *schema.{{.Name}}) *{{.GenPkg}}.Create{{.Name}}Input {
+	createinput := new({{.GenPkg}}.Create{{.Name}}Input)
 	structure.Copy(sch, &createinput)
 
 	return createinput
 }
 
-func ToEntUpdate{{.Name}}Input(sch *schema.{{.Name}}) *ent.Update{{.Name}}Input {
-	updateinput := new(ent.Update{{.Name}}Input)
+func ToEntUpdate{{.Name}}Input(sch *schema.{{.Name}}) *{{.GenPkg}}.Update{{.Name}}Input {
+	updateinput := new({{.GenPkg}}.Update{{.Name}}Input)
 	structure.Copy(sch, &updateinput)
 
 	return updateinput
@@ -150,7 +151,7 @@ func (a *{{.Name}}) Get(ctx context.Context, id string, opts ...schema.{{.Name}}
 	
 	r_{{.Name | ToLower}}, err := a.EntCli.{{.Name}}.Query().Where({{.EntPackage}}.IDEQ(id)).Only(ctx)
 	if err != nil {
-		if ent.IsNotFound(err) {
+		if {{.GenPkg}}.IsNotFound(err) {
 			return nil, errors.ErrNotFound
 		}
 		return nil, err
@@ -164,7 +165,7 @@ func (a *{{.Name}}) View(ctx context.Context, id string, opts ...schema.{{.Name}
 	
 	r_{{.Name | ToLower}}, err := a.EntCli.{{.Name}}.Query().Where({{.EntPackage}}.IDEQ(id)).Only(ctx)
 	if err != nil {
-		if ent.IsNotFound(err) {
+		if {{.GenPkg}}.IsNotFound(err) {
 			return nil, errors.ErrNotFound
 		}
 		return nil, err

@@ -105,6 +105,10 @@ func GenerateCommand() cli.Command {
 				Usage: "指定生成模块（默认生成全部模块，以逗号分隔，支持：schema, repo, service, api,mock,router）",
 			},
 			&cli.StringFlag{
+				Name:  "genpkg",
+				Usage: "指定生成的包名最后一节, 比如完整包名为internal/gen/entscheme, 则为entscheme",
+			},
+			&cli.StringFlag{
 				Name:  "storage, s",
 				Usage: "指定model的实现存储（默认ent，支持：ent）",
 			},
@@ -119,6 +123,7 @@ func GenerateCommand() cli.Command {
 				Modules:    c.String("module"),
 				Storage:    c.String("storage"),
 				ApiVersion: c.String("apiversion"),
+				GenPkg:     c.String("genpkg"),
 			}
 
 			if cfg.Dir == "" {
@@ -137,6 +142,11 @@ func GenerateCommand() cli.Command {
 				return nil
 			} else if cfg.Name != "" && cfg.Comment == "" {
 				fmt.Println("请指定模块说明")
+				return nil
+			}
+
+			if cfg.GenPkg == "" {
+				fmt.Println("请指定生成的包名最后一节")
 				return nil
 			}
 
