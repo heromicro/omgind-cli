@@ -112,6 +112,9 @@ func (a *{{.Name}}) String() string {
 type {{.Name}}QueryParam struct {
 	PaginationParam
 	QueryValue string ` + "`" + `form:"queryValue"` + "`" + ` // 模糊查询
+
+	BasicOrderParam
+	TimeOrderParam
 }
 
 // {{.Name}}QueryOptions 查询可选参数项
