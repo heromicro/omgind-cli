@@ -26,7 +26,7 @@ type fieldParts struct {
 }
 
 func getEntityEntFileName(dir, name string) string {
-	fullname := fmt.Sprintf("%s/internal/schema/entity/%s.entity.go", dir, helper.ToLowerUnderlinedNamer(name))
+	fullname := fmt.Sprintf("%s/internal/scheme/entity/%s.entity.go", dir, helper.ToLowerUnderlinedNamer(name))
 	return fullname
 }
 
@@ -152,7 +152,7 @@ func genEntEntity(ctx context.Context, pkgName, dir, name, comment, mixin_parts 
 				field_buf.WriteString(fmt.Sprintf(".Default(%s)", field.Default))
 			}
 		case "time":
-			
+
 		}
 
 		if !field.Required {
@@ -220,7 +220,7 @@ const entityEntTpl = `
 package entity
 
 import (
-	"{{.PkgName}}/internal/schema/mixin"
+	"{{.PkgName}}/internal/scheme/mixin"
 
 	"entgo.io/ent"
 	"entgo.io/ent/schema/field"

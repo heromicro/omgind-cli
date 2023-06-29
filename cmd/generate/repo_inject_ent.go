@@ -7,7 +7,7 @@ import (
 )
 
 func getRepoInjectEntFileName(dir string) string {
-	fullname := fmt.Sprintf("%s/internal/schema/repo/main.go", dir)
+	fullname := fmt.Sprintf("%s/internal/scheme/repo/main.go", dir)
 	return fullname
 }
 

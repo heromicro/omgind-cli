@@ -44,7 +44,7 @@ import (
 
 	"github.com/google/wire"
 
-	"{{.PkgName}}/internal/schema/repo"
+	"{{.PkgName}}/internal/scheme/repo"
 	"{{.PkgName}}/internal/app/schema"
 	"{{.PkgName}}/pkg/errors"
 )

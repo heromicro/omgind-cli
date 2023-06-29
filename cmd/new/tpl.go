@@ -292,7 +292,7 @@ const TplProjectStructure = `
 │   │   ├── v2_sys_menu.go
 │   │   ├── v2_sys_role.go
 │   │   └── v2_sys_user.go
-│   └── schema
+│   └── scheme
 │       ├── client.go
 │       ├── entity
 │       │   ├── entity.go

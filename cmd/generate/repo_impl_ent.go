@@ -9,7 +9,7 @@ import (
 )
 
 func getRepoImplEntFileName(dir, name string) string {
-	fullname := fmt.Sprintf("%s/internal/schema/repo/%s.repo.go", dir, helper.ToLowerUnderlinedNamer(name))
+	fullname := fmt.Sprintf("%s/internal/scheme/repo/%s.repo.go", dir, helper.ToLowerUnderlinedNamer(name))
 	return fullname
 }
 
