@@ -109,7 +109,7 @@ func (a *{{.Name}}) Create(c *gin.Context) {
 		return
 	}
 
-	item.Creator = ginx.GetUserID(c)
+	// item.Creator = ginx.GetUserID(c)
 	result, err := a.{{.Name}}Srv.Create(ctx, item)
 	if err != nil {
 		ginx.ResError(c, err)

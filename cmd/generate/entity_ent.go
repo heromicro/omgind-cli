@@ -39,7 +39,7 @@ func genEntEntity(ctx context.Context, pkgName, dir, name, comment, mixin_parts 
 	mixin_items := make([]string, len(mixin_parts))
 
 	tfields = append(tfields, fields...)
-	tfields = append(tfields, entityEntField{Name: "Creator", Storage: "creator", Comment: "创建者", Type: "string"})
+	// tfields = append(tfields, entityEntField{Name: "Creator", Storage: "creator", Comment: "创建者", Type: "string"})
 
 	field_buf := new(bytes.Buffer)
 	indexes := make([]string, 0)
