@@ -106,7 +106,7 @@ func (a *{{.Name}}) View(c *gin.Context) {
 // @Security ApiKeyAuth
 // @Param Authorization header string false "Bearer 用户令牌"
 // @Param body body schema.{{.Name}} true "创建数据"
-// @Success 200 {object} schema.IDResult
+// @Success 200 {object} schema.ResSuccess
 // @Failure 400 {object} schema.ErrorResult "{error:{code:0,message:无效的请求参数}}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
@@ -121,7 +121,7 @@ func (a *{{.Name}}) Create(c *gin.Context) {
 // @Param Authorization header string false "Bearer 用户令牌"
 // @Param id path string true "唯一标识"
 // @Param body body schema.{{.Name}} true "更新数据"
-// @Success 200 {object} schema.StatusResult "{status:OK}"
+// @Success 200 {object} schema.ResSuccess 
 // @Failure 400 {object} schema.ErrorResult "{error:{code:0,message:无效的请求参数}}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
@@ -135,7 +135,7 @@ func (a *{{.Name}}) Update(c *gin.Context) {
 // @Security ApiKeyAuth
 // @Param Authorization header string false "Bearer 用户令牌"
 // @Param id path string true "唯一标识"
-// @Success 200 {object} schema.StatusResult "{status:OK}"
+// @Success 200 {object} schema.ResOK 
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
 // @Router /api/{{.Apiv}}/{{.PluralName}}/{id} [delete]
@@ -147,7 +147,7 @@ func (a *{{.Name}}) Delete(c *gin.Context) {
 // @Summary 启用数据
 // @Security ApiKeyAuth
 // @Param id path string true "唯一标识"
-// @Success 200 {object} schema.StatusResult "{status:OK}"
+// @Success 200 {object} schema.ResOK 
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
 // @Router /api/{{.Apiv}}/{{.PluralName}}/{id}/enable [patch]
@@ -159,7 +159,7 @@ func (a *{{.Name}}) Enable(c *gin.Context) {
 // @Summary 禁用数据
 // @Security ApiKeyAuth
 // @Param id path string true "唯一标识"
-// @Success 200 {object} schema.StatusResult "{status:OK}"
+// @Success 200 {object} schema.ResOK 
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
 // @Router /api/{{.Apiv}}/{{.PluralName}}/{id}/disable [patch]
