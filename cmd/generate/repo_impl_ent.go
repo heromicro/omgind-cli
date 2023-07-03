@@ -47,13 +47,14 @@ import (
 	"context"
 	"time"
 
+	"github.com/google/wire"
+
 	"{{.PkgName}}/internal/app/schema"
 	"{{.PkgName}}/internal/gen/{{.GenPkg}}"
 	"{{.PkgName}}/internal/gen/{{.GenPkg}}/{{.EntPackage}}"
 	"{{.PkgName}}/pkg/errors"
 	"{{.PkgName}}/pkg/helper/structure"
 
-	"github.com/google/wire"
 )
 
 
