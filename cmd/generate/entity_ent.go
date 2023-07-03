@@ -220,7 +220,6 @@ const entityEntTpl = `
 package entity
 
 import (
-	"{{.PkgName}}/internal/scheme/mixin"
 
 	"entgo.io/ent"
 	"entgo.io/ent/schema/field"
@@ -229,6 +228,8 @@ import (
 	// {{$length}}
 	"entgo.io/ent/schema/index" 
 	{{- end -}}
+
+	"{{.PkgName}}/internal/scheme/mixin"
 )
 
 type {{.Name}} struct {
