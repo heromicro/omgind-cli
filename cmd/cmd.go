@@ -106,7 +106,7 @@ func GenerateCommand() cli.Command {
 			},
 			&cli.StringFlag{
 				Name:  "genpkg",
-				Usage: "指定生成的包名最后一节, 比如完整包名为internal/gen/entscheme, 则为entscheme",
+				Usage: "指定生成的包名最后一节, 比如完整包名为internal/gen/mainent, 则为mainent",
 			},
 			&cli.StringFlag{
 				Name:  "storage, s",
@@ -146,8 +146,9 @@ func GenerateCommand() cli.Command {
 			}
 
 			if cfg.GenPkg == "" {
-				fmt.Println("请指定生成的包名最后一节")
-				return nil
+				// fmt.Println("请指定生成的包名最后一节")
+				// return nil
+				cfg.GenPkg = "mainent"
 			}
 
 			return generate.Exec(cfg)
