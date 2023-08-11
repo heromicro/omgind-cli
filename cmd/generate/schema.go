@@ -116,6 +116,10 @@ type {{.Name}}QueryParam struct {
 	TimeOrderParam
 }
 
+func (a *{{.Name}}QueryParam) String() string {
+	return json.MarshalToString(a)
+}
+
 // {{.Name}}QueryOptions 查询可选参数项
 type {{.Name}}QueryOptions struct {
 	OrderFields []*OrderField // 排序字段
@@ -123,6 +127,11 @@ type {{.Name}}QueryOptions struct {
 	FieldsAll      bool  		 // all fields
 	FieldsIncludes []string      // includes fields
 	FieldsExcludes []string      // exlcudes fields
+}
+
+
+func (a *{{.Name}}QueryOptions) String() string {
+	return json.MarshalToString(a)
 }
 
 // {{.Name}}QueryResult 查询结果
