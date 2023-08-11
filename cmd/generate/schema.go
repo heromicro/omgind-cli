@@ -94,7 +94,7 @@ package schema
 import (
 	"time"
 
-	"{{.PkgName}}/pkg/helper/json"
+	jsonhelper "{{.PkgName}}/pkg/helper/json"
 )
 
 // {{.Name}} {{.Comment}}对象
@@ -104,7 +104,7 @@ type {{.Name}} struct {
 
 
 func (a *{{.Name}}) String() string {
-	return json.MarshalToString(a)
+	return jsonhelper.MarshalToString(a)
 }
 
 // {{.Name}}QueryParam 查询条件
@@ -117,7 +117,7 @@ type {{.Name}}QueryParam struct {
 }
 
 func (a *{{.Name}}QueryParam) String() string {
-	return json.MarshalToString(a)
+	return jsonhelper.MarshalToString(a)
 }
 
 // {{.Name}}QueryOptions 查询可选参数项
@@ -131,7 +131,7 @@ type {{.Name}}QueryOptions struct {
 
 
 func (a *{{.Name}}QueryOptions) String() string {
-	return json.MarshalToString(a)
+	return jsonhelper.MarshalToString(a)
 }
 
 // {{.Name}}QueryResult 查询结果
