@@ -64,6 +64,7 @@ func insertRouterAPI(ctx context.Context, dir, name, apiv string) error {
 }
 
 const routerAPITpl = `
-a.init{{.Name}}Router{{.ApiV | ToUpper}}(v2, a.{{.Name}}API{{.ApiV | ToUpper}}, "{{.Name | ToLower}}")
+a.init{{.Name}}Router{{.ApiV | ToUpper}}({{.ApiV | ToLower}}, a.{{.Name}}API{{.ApiV | ToUpper}}, "{{.Name | ToLower}}")
+v2.GET("{{.Name | ToLower}}.select.page", a.{{.Name}}API{{.ApiV | ToUpper}})
 
 `
