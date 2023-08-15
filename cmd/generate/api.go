@@ -78,6 +78,25 @@ func (a *{{.Name}}) Query(c *gin.Context) {
 	ginx.ResPage(c, result.Data, result.PageResult)
 }
 
+// QuerySelectPage 查询数据
+func (a *{{.Name}}) QuerySelectPage(c *gin.Context) {
+	ctx := c.Request.Context()
+	var params schema.{{.Name}}QueryParam
+	if err := ginx.ParseQuery(c, &params); err != nil {
+		ginx.ResError(c, err)
+		return
+	}
+
+	params.Pagination = true
+	result, err := a.{{.Name}}Srv.QuerySelectPage(ctx, params)
+	if err != nil {
+		ginx.ResError(c, err)
+		return
+	}
+	
+	ginx.ResPage(c, result.Data, result.PageResult)
+}
+
 // Get 查询指定数据
 func (a *{{.Name}}) Get(c *gin.Context) {
 	ctx := c.Request.Context()

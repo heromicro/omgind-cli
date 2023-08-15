@@ -62,6 +62,11 @@ func (a *{{.Name}}) Query(ctx context.Context, params schema.{{.Name}}QueryParam
 	return a.{{.Name}}Repo.Query(ctx, params, opts...)
 }
 
+// QuerySelectPage 查询数据
+func (a *{{.Name}}) QuerySelectPage(ctx context.Context, params schema.{{.Name}}QueryParam, opts ...schema.{{.Name}}QueryOptions) (*schema.{{.Name}}QueryResult, error) {
+	return a.{{.Name}}Repo.QuerySelectPage(ctx, params, opts...)
+}
+
 // Get 查询指定数据
 func (a *{{.Name}}) Get(ctx context.Context, id string, opts ...schema.{{.Name}}QueryOptions) (*schema.{{.Name}}, error) {
 	item, err := a.{{.Name}}Repo.Get(ctx, id, opts...)

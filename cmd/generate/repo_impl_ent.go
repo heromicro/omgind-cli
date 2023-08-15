@@ -146,6 +146,66 @@ func (a *{{.Name}}) Query(ctx context.Context, params schema.{{.Name}}QueryParam
 	return qr, nil
 }
 
+// Query 查询数据
+func (a *{{.Name}}) QuerySelectPage(ctx context.Context, params schema.{{.Name}}QueryParam, opts ...schema.{{.Name}}QueryOptions) (*schema.{{.Name}}QueryResult, error) {
+	// opt := a.getQueryOption(opts...)
+
+	query := a.EntCli.{{.Name}}.Query()
+
+	query = query.Where({{.EntPackage}}.DeletedAtIsNil())
+	// TODO: 查询条件
+
+
+	if v := params.QueryValue; v != "" {
+		query = query.Where({{.EntPackage}}.Or({{.EntPackage}}.NameContains(v)))
+	}
+	
+	if v := params.MustIncludeIDs; len(v) > 0 {
+		query = query.Where({{.EntPackage}}.IDNotIn(v...))
+	}
+
+	count, err := query.Count(ctx)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	// get total
+	pr := &schema.PaginationResult{Total: count}
+	if params.PaginationParam.OnlyCount {
+		return &schema.{{.Name}}QueryResult{PageResult: pr}, nil
+	}
+
+	query = query.Order({{.GenPkg}}.Asc({{.EntPackage}}.FieldSort))
+
+	pr.Current = params.PaginationParam.GetCurrent()
+	pr.PageSize = params.PaginationParam.GetPageSize()
+	if params.Offset() > count {
+		return &schema.{{.Name}}QueryResult{PageResult: pr}, nil
+	}
+	query = query.Limit(params.Limit()).Offset(params.Offset())
+	
+	qs := query.Select({{.EntPackage}}.FieldID, {{.EntPackage}}.FieldName, {{.EntPackage}}.FieldIsActive)
+
+	rlist, err1 := qs.All(ctx)
+	if err1 != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	qr := &schema.{{.Name}}QueryResult{
+		PageResult: pr,
+		// Data:       ToSchema{{.PluralName}}(rlist),
+	}
+
+
+	if len(mustIncludes) > 0 {
+		mustIncludes = append(mustIncludes, ToSchema{{.PluralName}}(rlist)...)
+		qr.Data = mustIncludes
+	} else {
+		qr.Data = ToSchema{{.PluralName}}(rlist)
+	}
+
+	return qr, nil
+}
+
 // Get 查询指定数据
 func (a *{{.Name}}) Get(ctx context.Context, id string, opts ...schema.{{.Name}}QueryOptions) (*schema.{{.Name}}, error) {
 	
