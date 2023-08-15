@@ -189,6 +189,16 @@ func (a *{{.Name}}) QuerySelectPage(ctx context.Context, params schema.{{.Name}}
 	if err1 != nil {
 		return nil, errors.WithStack(err)
 	}
+	
+	var mustIncludes schema.{{.PluralName}} = make(schema.{{.PluralName}}, 0)
+	if v := params.MustIncludeIDs; len(v) > 0 {
+		query_in := a.EntCli.{{.Name}}.Query().Where({{.EntPackage}}.IDIn(v...))
+		items_ent, err := query_in.All(ctx)
+		if err != nil {
+			return nil, errors.WithStack(err)
+		}
+		mustIncludes = append(mustIncludes, ToSchema{{.PluralName}}(items_ent)...)
+	}
 
 	qr := &schema.{{.Name}}QueryResult{
 		PageResult: pr,
