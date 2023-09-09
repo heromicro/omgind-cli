@@ -110,7 +110,7 @@ func (a *{{.Name}}) String() string {
 // {{.Name}}QueryParam 查询条件
 type {{.Name}}QueryParam struct {
 	PaginationParam
-	Q string ` + "`" + `form:"q"` + "`" + ` // 模糊查询
+	QueryValue string ` + "`" + `form:"q"` + "`" + ` // 模糊查询
 
 	BasicOrderParam
 	TimeOrderParam
