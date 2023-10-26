@@ -112,10 +112,10 @@ func (a *{{.Name}}) Query(ctx context.Context, params schema.{{.Name}}QueryParam
 
 
 	if v := params.IsDel; v != nil && *v {
-		query = query.Where({{.EntPackage}}.IsDel(*v))
+		query = query.Where({{.EntPackage}}.IsDelEQ(*v))
 	} else {
 		// query = query.Where({{.EntPackage}}.DeletedAtIsNil())
-		query = query.Where({{.EntPackage}}.IsDel())
+		query = query.Where({{.EntPackage}}.IsDelEQ())
 	}
 
 	// TODO: 查询条件
@@ -160,10 +160,10 @@ func (a *{{.Name}}) QuerySelectPage(ctx context.Context, params schema.{{.Name}}
 	query := a.EntCli.{{.Name}}.Query()
 
 	if v := params.IsDel; v != nil && *v {
-		query = query.Where({{.EntPackage}}.IsDel(*v))
+		query = query.Where({{.EntPackage}}.IsDelEQ(*v))
 	} else {
 		// query = query.Where({{.EntPackage}}.DeletedAtIsNil())
-		query = query.Where({{.EntPackage}}.IsDel())
+		query = query.Where({{.EntPackage}}.IsDelEQ(false))
 	}
 	// TODO: 查询条件
 
