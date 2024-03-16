@@ -64,14 +64,14 @@ func (a *{{.Name}}) Query(c *gin.Context) {
 	ctx := c.Request.Context()
 	var params schema.{{.Name}}QueryParam
 	if err := ginx.ParseQuery(c, &params); err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1100, err)
 		return
 	}
 
 	params.Pagination = true
 	result, err := a.{{.Name}}Srv.Query(ctx, params)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1110, err)
 		return
 	}
 	
@@ -83,14 +83,14 @@ func (a *{{.Name}}) QuerySelectPage(c *gin.Context) {
 	ctx := c.Request.Context()
 	var params schema.{{.Name}}QueryParam
 	if err := ginx.ParseQuery(c, &params); err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1100, err)
 		return
 	}
 
 	params.Pagination = true
 	result, err := a.{{.Name}}Srv.QuerySelectPage(ctx, params)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1120, err)
 		return
 	}
 	
@@ -102,7 +102,7 @@ func (a *{{.Name}}) Get(c *gin.Context) {
 	ctx := c.Request.Context()
 	item, err := a.{{.Name}}Srv.Get(ctx, c.Param("id"))
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1130, err)
 		return
 	}
 	ginx.ResSuccess(c, item)
@@ -113,7 +113,7 @@ func (a *{{.Name}}) View(c *gin.Context) {
 	ctx := c.Request.Context()
 	item, err := a.{{.Name}}Srv.View(ctx, c.Param("id"))
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1140, err)
 		return
 	}
 	ginx.ResSuccess(c, item)
@@ -124,14 +124,14 @@ func (a *{{.Name}}) Create(c *gin.Context) {
 	ctx := c.Request.Context()
 	var item schema.{{.Name}}
 	if err := ginx.ParseJSON(c, &item); err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1100, err)
 		return
 	}
 
 	// item.Creator = ginx.GetUserID(c)
 	result, err := a.{{.Name}}Srv.Create(ctx, item)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1150, err)
 		return
 	}
 	ginx.ResSuccess(c, result)
@@ -142,13 +142,13 @@ func (a *{{.Name}}) Update(c *gin.Context) {
 	ctx := c.Request.Context()
 	var item schema.{{.Name}}
 	if err := ginx.ParseJSON(c, &item); err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1100, err)
 		return
 	}
 
 	result, err := a.{{.Name}}Srv.Update(ctx, c.Param("id"), item)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1160, err)
 		return
 	}
 	ginx.ResSuccess(c, result)
@@ -159,7 +159,7 @@ func (a *{{.Name}}) Delete(c *gin.Context) {
 	ctx := c.Request.Context()
 	err := a.{{.Name}}Srv.Delete(ctx, c.Param("id"))
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1170, err)
 		return
 	}
 	ginx.ResOK(c, "成功删除数据")
@@ -171,7 +171,7 @@ func (a *{{.Name}}) Enable(c *gin.Context) {
 	ctx := c.Request.Context()
 	err := a.{{.Name}}Srv.UpdateActive(ctx, c.Param("id"), true)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1180, err)
 		return
 	}
 	ginx.ResOK(c, "启用成功")
@@ -182,7 +182,7 @@ func (a *{{.Name}}) Disable(c *gin.Context) {
 	ctx := c.Request.Context()
 	err := a.{{.Name}}Srv.UpdateActive(ctx, c.Param("id"), false)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1190, err)
 		return
 	}
 	ginx.ResOK(c, "启用成功")
