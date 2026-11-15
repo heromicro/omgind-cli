@@ -18,11 +18,12 @@ func genAPIMock(ctx context.Context, pkgName, dir, name, comment, apiv string) e
 	pname = strings.Replace(pname, "_", "-", -1)
 
 	data := map[string]interface{}{
-		"PkgName":    pkgName,
-		"Name":       name,
-		"Comment":    comment,
-		"PluralName": strings.Replace(helper.ToPlural(pname), "-", "", -1),
-		"Apiv":       apiv,
+		"PkgName":          pkgName,
+		"Name":             name,
+		"Comment":          comment,
+		"PluralName":       strings.Replace(helper.ToPlural(pname), "-", "", -1),
+		"Apiv":             apiv,
+		"SchemaPluralName": helper.ToPlural(name),
 	}
 
 	buf, err := execParseTpl(apiMockTpl, data)
@@ -65,7 +66,7 @@ type {{.Name}} struct {
 // @Param current query int true "分页索引" default(1)
 // @Param pageSize query int true "分页大小" default(10)
 // @Param q query string false "查询值"
-// @Success 200 {array} schema.ListResult{list=schema.{{.PluralName | Title}},pagination=schema.PaginationResult}
+// @Success 200 {object} schema.ListResult{list=schema.{{.SchemaPluralName}},pagination=schema.PaginationResult}
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
 // @Router /api/{{.Apiv}}/{{.PluralName}} [get]
@@ -106,7 +107,7 @@ func (a *{{.Name}}) View(c *gin.Context) {
 // @Security ApiKeyAuth
 // @Param Authorization header string false "Bearer 用户令牌"
 // @Param body body schema.{{.Name}} true "创建数据"
-// @Success 200 {object} schema.ResSuccess
+// @Success 200 {object} schema.{{.Name}}
 // @Failure 400 {object} schema.ErrorResult "{error:{code:0,message:无效的请求参数}}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
@@ -121,7 +122,7 @@ func (a *{{.Name}}) Create(c *gin.Context) {
 // @Param Authorization header string false "Bearer 用户令牌"
 // @Param id path string true "唯一标识"
 // @Param body body schema.{{.Name}} true "更新数据"
-// @Success 200 {object} schema.ResSuccess 
+// @Success 200 {object} schema.{{.Name}} 
 // @Failure 400 {object} schema.ErrorResult "{error:{code:0,message:无效的请求参数}}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
@@ -135,7 +136,7 @@ func (a *{{.Name}}) Update(c *gin.Context) {
 // @Security ApiKeyAuth
 // @Param Authorization header string false "Bearer 用户令牌"
 // @Param id path string true "唯一标识"
-// @Success 200 {object} schema.ResOK 
+// @Success 200 {object} schema.StatusResult 
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
 // @Router /api/{{.Apiv}}/{{.PluralName}}/{id} [delete]
@@ -147,7 +148,7 @@ func (a *{{.Name}}) Delete(c *gin.Context) {
 // @Summary 启用数据
 // @Security ApiKeyAuth
 // @Param id path string true "唯一标识"
-// @Success 200 {object} schema.ResOK 
+// @Success 200 {object} schema.StatusResult 
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
 // @Router /api/{{.Apiv}}/{{.PluralName}}/{id}/enable [patch]
@@ -159,7 +160,7 @@ func (a *{{.Name}}) Enable(c *gin.Context) {
 // @Summary 禁用数据
 // @Security ApiKeyAuth
 // @Param id path string true "唯一标识"
-// @Success 200 {object} schema.ResOK 
+// @Success 200 {object} schema.StatusResult 
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
 // @Router /api/{{.Apiv}}/{{.PluralName}}/{id}/disable [patch]
