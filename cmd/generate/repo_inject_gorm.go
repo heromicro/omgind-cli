@@ -7,7 +7,7 @@ import (
 )
 
 func getRepoInjectGormFileName(dir string) string {
-	fullname := fmt.Sprintf("%s/internal/app/model/gormx/repo/main.go", dir)
+	fullname := fmt.Sprintf("%s/internal/scheme/repo/gorm/main.go", dir)
 	return fullname
 }
 

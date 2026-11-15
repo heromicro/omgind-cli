@@ -7,7 +7,7 @@ import (
 )
 
 func getModelInjectMongoFileName(dir string) string {
-	fullname := fmt.Sprintf("%s/internal/app/model/impl/mongo/repo/main.go", dir)
+	fullname := fmt.Sprintf("%s/internal/scheme/repo/mongo/main.go", dir)
 	return fullname
 }
 

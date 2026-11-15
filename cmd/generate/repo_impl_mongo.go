@@ -8,7 +8,7 @@ import (
 )
 
 func getRepoImplMongoFileName(dir, name string) string {
-	fullname := fmt.Sprintf("%s/internal/app/model/impl/mongo/model/%s.repo.go", dir, helper.ToLowerUnderlinedNamer(name))
+	fullname := fmt.Sprintf("%s/internal/scheme/repo/mongo/%s.repo.go", dir, helper.ToLowerUnderlinedNamer(name))
 	return fullname
 }
 
@@ -44,19 +44,17 @@ import (
 	"context"
 	"time"
 
-	"{{.PkgName}}/internal/app/model"
-	"{{.PkgName}}/internal/app/model/impl/mongo/entity"
+	"{{.PkgName}}/internal/scheme/entity/mongo"
 	"{{.PkgName}}/internal/app/schema"
 	"{{.PkgName}}/pkg/errors"
 	"github.com/google/wire"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/v2/mongo"
+	"go.mongodb.org/mongo-driver/v2/mongo/options"
 )
 
-var _ model.I{{.Name}} = (*{{.Name}})(nil)
 
 // {{.Name}}Set 注入{{.Name}}
-var {{.Name}}Set = wire.NewSet(wire.Struct(new({{.Name}}), "*"), wire.Bind(new(model.I{{.Name}}), new(*{{.Name}})))
+var {{.Name}}Set = wire.NewSet(wire.Struct(new({{.Name}}), "*"))
 
 // {{.Name}} {{.Comment}}存储
 type {{.Name}} struct {

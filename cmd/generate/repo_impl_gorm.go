@@ -8,7 +8,7 @@ import (
 )
 
 func getRepoImplGormFileName(dir, name string) string {
-	fullname := fmt.Sprintf("%s/internal/app/model/gormx/repo/%s.repo.go", dir, helper.ToLowerUnderlinedNamer(name))
+	fullname := fmt.Sprintf("%s/internal/scheme/repo/gorm/%s.repo.go", dir, helper.ToLowerUnderlinedNamer(name))
 	return fullname
 }
 
@@ -43,7 +43,7 @@ package repo
 import (
 	"context"
 
-	"{{.PkgName}}/internal/app/model/gormx/entity"
+	"{{.PkgName}}/internal/scheme/entity/gorm"
 	"{{.PkgName}}/internal/app/schema"
 	"{{.PkgName}}/pkg/errors"
 	"github.com/google/wire"

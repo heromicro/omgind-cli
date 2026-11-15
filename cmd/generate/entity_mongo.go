@@ -15,7 +15,7 @@ type entityMongoField struct {
 }
 
 func getEntityMongoFileName(dir, name string) string {
-	fullname := fmt.Sprintf("%s/internal/app/model/impl/mongo/entity/%s.entity.go", dir, helper.ToLowerUnderlinedNamer(name))
+	fullname := fmt.Sprintf("%s/internal/scheme/entity/mongo/%s.entity.go", dir, helper.ToLowerUnderlinedNamer(name))
 	return fullname
 }
 
@@ -74,9 +74,9 @@ import (
 	"context"
 
 	"{{.PkgName}}/internal/app/schema"
-	"{{.PkgName}}/pkg/helper"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo"
+	"{{.PkgName}}/pkg/helper/structure"
+	"go.mongodb.org/mongo-driver/v2/bson"
+	"go.mongodb.org/mongo-driver/v2/mongo"
 )
 
 // Get{{.Name}}Collection 获取{{.Name}}集合
@@ -90,7 +90,7 @@ type Schema{{.Name}} schema.{{.Name}}
 // To{{.Name}} 转换为实体
 func (a Schema{{.Name}}) To{{.Name}}() *{{.Name}} {
 	item := new({{.Name}})
-	helper.StructMapToStruct(a, item)
+	structure.Copy(a, item)
 	return item
 }
 
@@ -114,7 +114,7 @@ func (a {{.Name}}) CreateIndexes(ctx context.Context, cli *mongo.Client) error {
 // ToSchema{{.Name}} 转换为对象
 func (a {{.Name}}) ToSchema{{.Name}}() *schema.{{.Name}} {
 	item := new(schema.{{.Name}})
-	helper.StructMapToStruct(a, item)
+	structure.Copy(a, item)
 	return item
 }
 

@@ -26,7 +26,7 @@ type fieldParts struct {
 }
 
 func getEntityEntFileName(dir, name string) string {
-	fullname := fmt.Sprintf("%s/internal/scheme/entity/%s.entity.go", dir, helper.ToLowerUnderlinedNamer(name))
+	fullname := fmt.Sprintf("%s/internal/scheme/entity/entgo/%s.entity.go", dir, helper.ToLowerUnderlinedNamer(name))
 	return fullname
 }
 
@@ -36,7 +36,7 @@ func genEntEntity(ctx context.Context, pkgName, dir, name, comment, mixin_parts 
 
 	mixins := strings.Split(mixin_parts, ",")
 
-	mixin_items := make([]string, len(mixin_parts))
+	mixin_items := make([]string, 0)
 
 	tfields = append(tfields, fields...)
 	// tfields = append(tfields, entityEntField{Name: "Creator", Storage: "creator", Comment: "创建者", Type: "string"})
@@ -186,8 +186,11 @@ func genEntEntity(ctx context.Context, pkgName, dir, name, comment, mixin_parts 
 		field_buf.WriteString(delimiter)
 	}
 
-	for i, item := range mixins {
-		mixin_items[i] = fmt.Sprintf("mixin.%sMixin{},", strings.Title(strings.TrimSpace(item)))
+	for _, item := range mixins {
+		item = strings.TrimSpace(item)
+		if item != "" {
+			mixin_items = append(mixin_items, fmt.Sprintf("mixin.%sMixin{},", strings.Title(item)))
+		}
 	}
 
 	tbuf, err := execParseTpl(entityEntTpl, map[string]interface{}{
@@ -217,7 +220,7 @@ func genEntEntity(ctx context.Context, pkgName, dir, name, comment, mixin_parts 
 }
 
 const entityEntTpl = `
-package entity
+package entgo
 
 import (
 

@@ -9,7 +9,7 @@ import (
 )
 
 func getRepoImplEntFileName(dir, name string) string {
-	fullname := fmt.Sprintf("%s/internal/scheme/repo/%s.repo.go", dir, helper.ToLowerUnderlinedNamer(name))
+	fullname := fmt.Sprintf("%s/internal/scheme/repo/entgo/%s.repo.go", dir, helper.ToLowerUnderlinedNamer(name))
 	return fullname
 }
 
@@ -115,7 +115,7 @@ func (a *{{.Name}}) Query(ctx context.Context, params schema.{{.Name}}QueryParam
 		query = query.Where({{.EntPackage}}.IsDelEQ(*v))
 	} else {
 		// query = query.Where({{.EntPackage}}.DeletedAtIsNil())
-		query = query.Where({{.EntPackage}}.IsDelEQ())
+		query = query.Where({{.EntPackage}}.IsDelEQ(false))
 	}
 
 	// TODO: 查询条件

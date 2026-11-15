@@ -13,8 +13,18 @@ func getServiceImplFileName(dir, name string) string {
 }
 
 // 生成bll实现文件
-func genServiceImpl(ctx context.Context, pkgName, dir, name, comment string) error {
+func genServiceImpl(ctx context.Context, pkgName, dir, name, comment string, storage ...string) error {
+	backend := "entgo"
+	if len(storage) > 0 {
+		switch storage[0] {
+		case "gorm":
+			backend = "gorm"
+		case "mongo", "mongodb":
+			backend = "mongo"
+		}
+	}
 	data := map[string]interface{}{
+		"Storage": backend,
 		"PkgName": pkgName,
 		"Name":    name,
 		"Comment": comment,
@@ -44,7 +54,7 @@ import (
 
 	"github.com/google/wire"
 
-	"{{.PkgName}}/internal/scheme/repo"
+	repo "{{.PkgName}}/internal/scheme/repo/{{.Storage}}"
 	"{{.PkgName}}/internal/app/schema"
 	"{{.PkgName}}/pkg/errors"
 )
