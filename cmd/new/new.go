@@ -160,7 +160,7 @@ func (a *Command) Exec() error {
 	}
 
 	fmt.Printf("\n项目创建成功：%s\n", dir)
-	fmt.Println(TplProjectStructure)
+	fmt.Print(TplProjectStructure)
 
 	return nil
 }
