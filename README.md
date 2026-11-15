@@ -127,3 +127,9 @@ omgind-cli g -p test-omgind -f task.yaml
 ## MIT License
 
   Copyright (c) 2021 heromicro/omgind-cli
+
+### 多存储项目
+
+`--storage` 按当前生成的模型选择，不是项目全局设置。一个项目可以组合 entgo + MongoDB 或 GORM + MongoDB，分别为不同模型执行生成命令即可。支持 `ent`/`entgo`（默认）、`gorm`、`mongo`/`mongodb`。
+
+实体生成到 `internal/scheme/entity/<存储>/`，仓储生成到 `internal/scheme/repo/<存储>/`，其中 Ent 的目录名为 `entgo`。各模型的 service 引用所选存储的 repo；数据库连接及 Wire 的项目级组合仍需在目标项目配置。

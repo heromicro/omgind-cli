@@ -2,6 +2,7 @@ package generate
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"path/filepath"
 	"strings"
@@ -55,6 +56,13 @@ func (a *Command) handleError(err error, desc string) {
 
 // Exec 执行命令
 func (a *Command) Exec() error {
+	switch a.cfg.Storage {
+	case "", "ent", "entgo", "gorm", "mongo", "mongodb":
+	default:
+		return fmt.Errorf("unsupported storage %q: choose entgo, gorm or mongo per model", a.cfg.Storage)
+	}
+
+	var generationErrors []error
 	var item TplItem
 
 	if a.cfg.File != "" {
@@ -89,34 +97,61 @@ func (a *Command) Exec() error {
 		}
 	}
 
+	if a.cfg.Modules == "entity" {
+		switch a.cfg.Storage {
+		case "mongo", "mongodb":
+			return genMongoEntity(ctx, pkgName, dir, item.StructName, item.Comment, item.toEntityMongoFields()...)
+		case "gorm":
+			return genGormEntity(ctx, pkgName, dir, item.StructName, item.Comment, item.toEntityGormFields()...)
+		default:
+			return genEntEntity(ctx, pkgName, dir, item.StructName, item.Comment, item.Mixin, item.toEntityEntFields()...)
+		}
+	}
+
 	if a.hasModule("repo") {
 		// err = genRepo(ctx, pkgName, dir, item.StructName, item.Comment)
 		// a.handleError(err, "Generate model interface")
 		switch a.cfg.Storage {
-		// case "mongo":
-		// 	err = genMongoEntity(ctx, pkgName, dir, item.StructName, item.Comment, item.toEntityMongoFields()...)
-		// 	a.handleError(err, "Generate mongo entity")
+		case "mongo", "mongodb":
+			err = genMongoEntity(ctx, pkgName, dir, item.StructName, item.Comment, item.toEntityMongoFields()...)
+			if err != nil {
+				generationErrors = append(generationErrors, fmt.Errorf("generate mongo entity: %w", err))
+			}
 
-		// 	err = insertEntityInjectMongo(ctx, dir, item.StructName)
-		// 	a.handleError(err, "Insert mongo entity inject")
+			err = insertEntityInjectMongo(ctx, dir, item.StructName)
+			if err != nil {
+				generationErrors = append(generationErrors, fmt.Errorf("insert mongo entity inject: %w", err))
+			}
 
-		// 	err = genModelImplMongo(ctx, pkgName, dir, item.StructName, item.Comment)
-		// 	a.handleError(err, "Generate mongo model")
+			err = genModelImplMongo(ctx, pkgName, dir, item.StructName, item.Comment)
+			if err != nil {
+				generationErrors = append(generationErrors, fmt.Errorf("generate mongo model: %w", err))
+			}
 
-		// 	err = insertRepoInjectMongo(ctx, dir, item.StructName)
-		// 	a.handleError(err, "Insert mongo model inject")
+			err = insertRepoInjectMongo(ctx, dir, item.StructName)
+			if err != nil {
+				generationErrors = append(generationErrors, fmt.Errorf("insert mongo model inject: %w", err))
+			}
 		case "gorm":
 			err = genGormEntity(ctx, pkgName, dir, item.StructName, item.Comment, item.toEntityGormFields()...)
-			a.handleError(err, "Generate gorm entity")
+			if err != nil {
+				generationErrors = append(generationErrors, fmt.Errorf("generate gorm entity: %w", err))
+			}
 
 			err = insertEntityInjectGorm(ctx, dir, item.StructName)
-			a.handleError(err, "Insert gorm entity inject")
+			if err != nil {
+				generationErrors = append(generationErrors, fmt.Errorf("insert gorm entity inject: %w", err))
+			}
 
 			err = genRepoImplGorm(ctx, pkgName, dir, item.StructName, item.Comment)
-			a.handleError(err, "Generate gorm model")
+			if err != nil {
+				generationErrors = append(generationErrors, fmt.Errorf("generate gorm model: %w", err))
+			}
 
 			err = insertRepoInjectGorm(ctx, dir, item.StructName)
-			a.handleError(err, "Insert gorm model inject")
+			if err != nil {
+				generationErrors = append(generationErrors, fmt.Errorf("insert gorm model inject: %w", err))
+			}
 		default:
 			err = genEntEntity(ctx, pkgName, dir, item.StructName, item.Comment, item.Mixin, item.
 				toEntityEntFields()...)
@@ -134,7 +169,7 @@ func (a *Command) Exec() error {
 		//err = genBll(ctx, pkgName, dir, item.StructName, item.Comment)
 		//a.handleError(err, "Generate service interface")
 
-		err = genServiceImpl(ctx, pkgName, dir, item.StructName, item.Comment)
+		err = genServiceImpl(ctx, pkgName, dir, item.StructName, item.Comment, a.cfg.Storage)
 		a.handleError(err, "Generate service impl")
 
 		err = insertServiceInject(ctx, dir, item.StructName)
@@ -166,5 +201,5 @@ func (a *Command) Exec() error {
 		a.handleError(err, "Insert router inject")
 	}
 
-	return nil
+	return errors.Join(generationErrors...)
 }

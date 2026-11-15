@@ -102,7 +102,7 @@ func GenerateCommand() cli.Command {
 			},
 			&cli.StringFlag{
 				Name:  "module, m",
-				Usage: "指定生成模块（默认生成全部模块，以逗号分隔，支持：schema, repo, service, api,mock,router）",
+				Usage: "指定生成模块（默认生成全部模块，以逗号分隔，支持：entity（仅实体）, schema, repo, service, api,mock,router）",
 			},
 			&cli.StringFlag{
 				Name:  "genpkg",
@@ -110,7 +110,7 @@ func GenerateCommand() cli.Command {
 			},
 			&cli.StringFlag{
 				Name:  "storage, s",
-				Usage: "指定model的实现存储（默认ent，支持：ent）",
+				Usage: "指定当前模型的存储（默认entgo，支持：ent/entgo、gorm、mongo/mongodb；同一项目可混用）",
 			},
 		},
 		Action: func(c *cli.Context) error {
