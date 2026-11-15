@@ -1,6 +1,6 @@
 module github.com/heromicro/omgind-cli
 
-go 1.27.0
+go 1.27.4
 
 require (
 	github.com/emirpasic/gods v1.18.1
